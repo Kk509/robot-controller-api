@@ -1,0 +1,65 @@
+GetRobotCommands:
+
+SELECT r.id, r.createddate, r.description, r.ismovecommand,
+       r.modifieddate, r."Name"
+FROM robotcommand AS r
+
+
+GetRobotCommandById:
+
+SELECT r.id, r.createddate, r.description, r.ismovecommand,
+       r.modifieddate, r."Name"
+FROM robotcommand AS r
+WHERE r.id = @__p_0
+LIMIT 1
+
+
+InsertRobotCommand:
+
+INSERT INTO robotcommand
+(createddate, description, ismovecommand, modifieddate, "Name")
+VALUES (@p0, @p1, @p2, @p3, @p4)
+RETURNING id;
+
+
+UpdateRobotCommand:
+
+UPDATE robotcommand
+SET description = @p0,
+    modifieddate = @p1,
+    "Name" = @p2
+WHERE id = @p3;
+
+
+DeleteRobotCommand:
+
+DELETE FROM robotcommand
+WHERE id = @p0;
+
+
+GetMaps:
+
+SELECT m.id, m.columns, m.createddate, m.description,
+       m.issquare, m.modifieddate, m."Name", m.rows
+FROM map AS m
+
+
+GetMapById:
+
+SELECT m.id, m.columns, m.createddate, m.description,
+       m.issquare, m.modifieddate, m."Name", m.rows
+FROM map AS m
+WHERE m.id = @__p_0
+LIMIT 1
+
+
+UpdateMap:
+
+UPDATE map
+SET columns = @p0,
+    description = @p1,
+    modifieddate = @p2,
+    "Name" = @p3,
+    rows = @p4
+WHERE id = @p5
+RETURNING issquare;
