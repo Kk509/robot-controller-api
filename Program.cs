@@ -7,17 +7,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // ado ver.
-//builder.Services.AddScoped<IRobotCommandDataAccess, RobotCommandADO>();
-//builder.Services.AddScoped<IMapDataAccess, MapADO>();
+// builder.Services.AddScoped<IRobotCommandDataAccess, RobotCommandADO>();
+// builder.Services.AddScoped<IMapDataAccess, MapADO>();
 
 // fastmember ver.
-// builder.Services.AddScoped<IRobotCommandDataAccess, RobotCommandRepository>();
-// builder.Services.AddScoped<IMapDataAccess, MapRepository>();
+builder.Services.AddScoped<IRobotCommandDataAccess, RobotCommandRepository>();
+builder.Services.AddScoped<IMapDataAccess, MapRepository>();
 
 // ef ver.
-builder.Services.AddScoped<IRobotCommandDataAccess, RobotCommandEF>();
-builder.Services.AddScoped<IMapDataAccess, MapEF>();
-builder.Services.AddScoped<RobotContext>();
+// builder.Services.AddScoped<IRobotCommandDataAccess, RobotCommandEF>();
+// builder.Services.AddScoped<IMapDataAccess, MapEF>();
+// builder.Services.AddScoped<RobotContext>();
 
 
 var app = builder.Build();

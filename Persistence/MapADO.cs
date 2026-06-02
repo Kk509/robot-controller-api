@@ -15,7 +15,7 @@ namespace robot_controller_api.Persistence
             using var conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
 
-            using var cmd = new NpgsqlCommand("SELECT * FROM map ORDER BY id", conn);
+            using var cmd = new NpgsqlCommand("SELECT * FROM robot_map ORDER BY id", conn);
             using var dr = cmd.ExecuteReader();
 
             while (dr.Read())
@@ -25,8 +25,8 @@ namespace robot_controller_api.Persistence
                     (int)dr["columns"],
                     (int)dr["rows"],
                     (string)dr["Name"],
-                    (DateTime)dr["createddate"],
-                    (DateTime)dr["modifieddate"],
+                    (DateTime)dr["created_date"],
+                    (DateTime)dr["modified_date"],
                     dr["description"] as string
                 );
 
@@ -41,7 +41,7 @@ namespace robot_controller_api.Persistence
             using var conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
 
-            using var cmd = new NpgsqlCommand("SELECT * FROM map WHERE id = @id", conn);
+            using var cmd = new NpgsqlCommand("SELECT * FROM robot_map WHERE id = @id", conn);
             cmd.Parameters.AddWithValue("id", id);
 
             using var dr = cmd.ExecuteReader();
@@ -53,8 +53,8 @@ namespace robot_controller_api.Persistence
                     (int)dr["columns"],
                     (int)dr["rows"],
                     (string)dr["Name"],
-                    (DateTime)dr["createddate"],
-                    (DateTime)dr["modifieddate"],
+                    (DateTime)dr["created_date"],
+                    (DateTime)dr["modified_date"],
                     dr["description"] as string
                 );
             }
@@ -64,49 +64,51 @@ namespace robot_controller_api.Persistence
 
         public Map CreateMap(Map map)
         {
-            // using var conn = new NpgsqlConnection(CONNECTION_STRING);
-            // conn.Open();
+            using var conn = new NpgsqlConnection(CONNECTION_STRING);
+            conn.Open();
 
-            // using var cmd = new NpgsqlCommand(
-            //     @"INSERT INTO map
-            //       (""Name"", rows, columns, description, createddate, modifieddate)
-            //       VALUES
-            //       (@name, @rows, @columns, @description, @createddate, @modifieddate)", conn);
+            using var cmd = new NpgsqlCommand(
+                @"INSERT INTO robot_map
+                  (""Name"", rows, columns, description, created_date, modified_date)
+                  VALUES
+                  (@name, @rows, @columns, @description, @created_date, @modified_date)", conn);
 
-            // cmd.Parameters.AddWithValue("name", map.Name);
-            // cmd.Parameters.AddWithValue("rows", map.Rows);
-            // cmd.Parameters.AddWithValue("columns", map.Columns);
-            // cmd.Parameters.AddWithValue("description", (object?)map.Description ?? DBNull.Value);
-            // cmd.Parameters.AddWithValue("createddate", DateTime.Now);
-            // cmd.Parameters.AddWithValue("modifieddate", DateTime.Now);
+            cmd.Parameters.AddWithValue("name", map.Name);
+            cmd.Parameters.AddWithValue("rows", map.Rows);
+            cmd.Parameters.AddWithValue("columns", map.Columns);
+            cmd.Parameters.AddWithValue("description", (object?)map.Description ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("created_date", DateTime.Now);
+            cmd.Parameters.AddWithValue("modified_date", DateTime.Now);
 
-            // cmd.ExecuteNonQuery();
-            throw new NotImplementedException();
+            cmd.ExecuteNonQuery();
+            // throw new NotImplementedException();
+            return map;
         }
 
         public Map UpdateMap(Map map)
         {
-            // using var conn = new NpgsqlConnection(CONNECTION_STRING);
-            // conn.Open();
+            using var conn = new NpgsqlConnection(CONNECTION_STRING);
+            conn.Open();
 
-            // using var cmd = new NpgsqlCommand(
-            //     @"UPDATE map
-            //       SET ""Name"" = @name,
-            //           rows = @rows,
-            //           columns = @columns,
-            //           description = @description,
-            //           modifieddate = @modifieddate
-            //       WHERE id = @id", conn);
+            using var cmd = new NpgsqlCommand(
+                @"UPDATE robot_map
+                  SET ""Name"" = @name,
+                      rows = @rows,
+                      columns = @columns,
+                      description = @description,
+                      modified_date = @modified_date
+                  WHERE id = @id", conn);
 
-            // cmd.Parameters.AddWithValue("id");
-            // cmd.Parameters.AddWithValue("name", map.Name);
-            // cmd.Parameters.AddWithValue("rows", map.Rows);
-            // cmd.Parameters.AddWithValue("columns", map.Columns);
-            // cmd.Parameters.AddWithValue("description", (object?)map.Description ?? DBNull.Value);
-            // cmd.Parameters.AddWithValue("modifieddate", DateTime.Now);
+            cmd.Parameters.AddWithValue("id", map.Id);
+            cmd.Parameters.AddWithValue("name", map.Name);
+            cmd.Parameters.AddWithValue("rows", map.Rows);
+            cmd.Parameters.AddWithValue("columns", map.Columns);
+            cmd.Parameters.AddWithValue("description", (object?)map.Description ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("modified_date", DateTime.Now);
 
-            // cmd.ExecuteNonQuery();
-            throw new NotImplementedException();
+            cmd.ExecuteNonQuery();
+            // throw new NotImplementedException();
+            return map;
         }
 
         public void DeleteMap(int id)
@@ -114,7 +116,7 @@ namespace robot_controller_api.Persistence
             using var conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
 
-            using var cmd = new NpgsqlCommand("DELETE FROM map WHERE id = @id", conn);
+            using var cmd = new NpgsqlCommand("DELETE FROM robot_map WHERE id = @id", conn);
             cmd.Parameters.AddWithValue("id", id);
 
             cmd.ExecuteNonQuery();

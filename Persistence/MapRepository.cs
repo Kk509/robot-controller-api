@@ -13,7 +13,7 @@ namespace robot_controller_api.Persistence
         public List<Map> GetMaps()
         {
             return _repo.ExecuteReader<Map>(
-                "SELECT * FROM public.map ORDER BY id"
+                "SELECT * FROM public.robot_map ORDER BY id"
             );
         }
 
@@ -26,7 +26,7 @@ namespace robot_controller_api.Persistence
             };
 
             return _repo.ExecuteReader<Map>(
-                "SELECT * FROM public.map WHERE id = @id",
+                "SELECT * FROM public.robot_map WHERE id = @id",
                 param
             ).SingleOrDefault();
         }
@@ -43,8 +43,8 @@ namespace robot_controller_api.Persistence
             };
 
             return _repo.ExecuteReader<Map>(
-                @"INSERT INTO map
-                  (name, columns, rows, description, createddate, modifieddate)
+                @"INSERT INTO robot_map
+                  (""Name"", columns, rows, description, created_date, modified_date)
                   VALUES
                   (@name, @columns, @rows, @description, current_timestamp, current_timestamp)
                   RETURNING *;",
@@ -65,12 +65,12 @@ namespace robot_controller_api.Persistence
             };
 
             return _repo.ExecuteReader<Map>(
-                @"UPDATE map
-                  SET name = @name,
+                @"UPDATE robot_map
+                  SET ""Name"" = @name,
                       columns = @columns,
                       rows = @rows,
                       description = @description,
-                      modifieddate = current_timestamp
+                      modified_date = current_timestamp
                   WHERE id = @id
                   RETURNING *;",
                 sqlParams
@@ -86,7 +86,7 @@ namespace robot_controller_api.Persistence
             };
 
             _repo.ExecuteReader<Map>(
-                "DELETE FROM map WHERE id = @id",
+                "DELETE FROM robot_map WHERE id = @id",
                 param
             );
         }

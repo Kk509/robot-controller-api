@@ -12,7 +12,7 @@ namespace robot_controller_api.Persistence
         public List<RobotCommand> GetRobotCommands()
         {
             return _repo.ExecuteReader<RobotCommand>(
-                "SELECT * FROM public.robotcommand"
+                "SELECT * FROM public.robot_command"
             );
         }
 
@@ -24,7 +24,7 @@ namespace robot_controller_api.Persistence
             };
 
             return _repo.ExecuteReader<RobotCommand>(
-                "SELECT * FROM public.robotcommand WHERE id = @id",
+                "SELECT * FROM public.robot_command WHERE id = @id",
                 param
             ).SingleOrDefault();
         }
@@ -35,14 +35,14 @@ namespace robot_controller_api.Persistence
             {
                 new("name", newCommand.Name),
                 new("description", (object?)newCommand.Description ?? DBNull.Value),
-                new("ismovecommand", newCommand.IsMoveCommand)
+                new("is_move_command", newCommand.IsMoveCommand)
             };
 
             return _repo.ExecuteReader<RobotCommand>(
-                @"INSERT INTO robotcommand
-                  (name, description, ismovecommand, createddate, modifieddate)
+                @"INSERT INTO robot_command
+                  (""Name"", description, is_move_command, created_date, modified_date)
                   VALUES
-                  (@name, @description, @ismovecommand, current_timestamp, current_timestamp)
+                  (@name, @description, @is_move_command, current_timestamp, current_timestamp)
                   RETURNING *;",
                 sqlParams
             ).Single();
@@ -55,15 +55,15 @@ namespace robot_controller_api.Persistence
                 new("id", updatedCommand.Id),
                 new("name", updatedCommand.Name),
                 new("description", (object?)updatedCommand.Description ?? DBNull.Value),
-                new("ismovecommand", updatedCommand.IsMoveCommand)
+                new("is_move_command", updatedCommand.IsMoveCommand)
             };
 
             return _repo.ExecuteReader<RobotCommand>(
-                @"UPDATE robotcommand
-                  SET name=@name,
+                @"UPDATE robot_command
+                  SET ""Name""=@name,
                       description=@description,
-                      ismovecommand=@ismovecommand,
-                      modifieddate=current_timestamp
+                      is_move_command=@is_move_command,
+                      modified_date=current_timestamp
                   WHERE id=@id
                   RETURNING *;",
                 sqlParams
@@ -78,7 +78,7 @@ namespace robot_controller_api.Persistence
             };
 
             _repo.ExecuteReader<RobotCommand>(
-                "DELETE FROM robotcommand WHERE id = @id",
+                "DELETE FROM robot_command WHERE id = @id",
                 param
             );
         }
