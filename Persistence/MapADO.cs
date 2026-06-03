@@ -24,7 +24,7 @@ namespace robot_controller_api.Persistence
                     (int)dr["id"],
                     (int)dr["columns"],
                     (int)dr["rows"],
-                    (string)dr["Name"],
+                    (string)dr["name"],
                     (DateTime)dr["created_date"],
                     (DateTime)dr["modified_date"],
                     dr["description"] as string
@@ -52,7 +52,7 @@ namespace robot_controller_api.Persistence
                     (int)dr["id"],
                     (int)dr["columns"],
                     (int)dr["rows"],
-                    (string)dr["Name"],
+                    (string)dr["name"],
                     (DateTime)dr["created_date"],
                     (DateTime)dr["modified_date"],
                     dr["description"] as string
@@ -69,7 +69,7 @@ namespace robot_controller_api.Persistence
 
             using var cmd = new NpgsqlCommand(
                 @"INSERT INTO robot_map
-                  (""Name"", rows, columns, description, created_date, modified_date)
+                  (name, rows, columns, description, created_date, modified_date)
                   VALUES
                   (@name, @rows, @columns, @description, @created_date, @modified_date)", conn);
 
@@ -92,7 +92,7 @@ namespace robot_controller_api.Persistence
 
             using var cmd = new NpgsqlCommand(
                 @"UPDATE robot_map
-                  SET ""Name"" = @name,
+                  SET name = @name,
                       rows = @rows,
                       columns = @columns,
                       description = @description,

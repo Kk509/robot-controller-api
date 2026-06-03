@@ -40,7 +40,7 @@ namespace robot_controller_api.Persistence
 
             return _repo.ExecuteReader<RobotCommand>(
                 @"INSERT INTO robot_command
-                  (""Name"", description, is_move_command, created_date, modified_date)
+                  (name, description, is_move_command, created_date, modified_date)
                   VALUES
                   (@name, @description, @is_move_command, current_timestamp, current_timestamp)
                   RETURNING *;",
@@ -60,7 +60,7 @@ namespace robot_controller_api.Persistence
 
             return _repo.ExecuteReader<RobotCommand>(
                 @"UPDATE robot_command
-                  SET ""Name""=@name,
+                  SET name=@name,
                       description=@description,
                       is_move_command=@is_move_command,
                       modified_date=current_timestamp

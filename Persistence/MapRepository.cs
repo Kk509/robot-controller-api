@@ -44,7 +44,7 @@ namespace robot_controller_api.Persistence
 
             return _repo.ExecuteReader<Map>(
                 @"INSERT INTO robot_map
-                  (""Name"", columns, rows, description, created_date, modified_date)
+                  (name, columns, rows, description, created_date, modified_date)
                   VALUES
                   (@name, @columns, @rows, @description, current_timestamp, current_timestamp)
                   RETURNING *;",
@@ -66,7 +66,7 @@ namespace robot_controller_api.Persistence
 
             return _repo.ExecuteReader<Map>(
                 @"UPDATE robot_map
-                  SET ""Name"" = @name,
+                  SET name = @name,
                       columns = @columns,
                       rows = @rows,
                       description = @description,

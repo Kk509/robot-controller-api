@@ -22,7 +22,7 @@ namespace robot_controller_api.Persistence
             {
                 var robotCommand = new RobotCommand(
                     (int)dr["id"],
-                    (string)dr["Name"],
+                    (string)dr["name"],
                     (bool)dr["is_move_command"],
                     (DateTime)dr["created_date"],
                     (DateTime)dr["modified_date"],
@@ -49,7 +49,7 @@ namespace robot_controller_api.Persistence
             {
                 return new RobotCommand(
                     (int)dr["id"],
-                    (string)dr["Name"],
+                    (string)dr["name"],
                     (bool)dr["is_move_command"],
                     (DateTime)dr["created_date"],
                     (DateTime)dr["modified_date"],
@@ -67,7 +67,7 @@ namespace robot_controller_api.Persistence
 
             using var cmd = new NpgsqlCommand(
                 @"INSERT INTO robot_command 
-                  (""Name"", description, is_move_command, created_date, modified_date)
+                  (name, description, is_move_command, created_date, modified_date)
                   VALUES 
                   (@name, @description, @is_move_command, @created_date, @modified_date)", conn);
 
@@ -89,7 +89,7 @@ namespace robot_controller_api.Persistence
 
             using var cmd = new NpgsqlCommand(
                 @"UPDATE robot_command
-                  SET ""Name"" = @name,
+                  SET name = @name,
                       description = @description,
                       is_move_command = @is_move_command,
                       modified_date = @modified_date
